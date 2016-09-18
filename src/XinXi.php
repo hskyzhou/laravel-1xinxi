@@ -11,7 +11,7 @@
 		 * @return		
 		 */
 		public function sendNormalInfo(){
-
+			
 		}
 
 		/**
