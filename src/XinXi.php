@@ -1,6 +1,7 @@
 <?php 
 	namespace Hsky\XinXi;
 
+	
 	class XinXi{
 		
 		/**

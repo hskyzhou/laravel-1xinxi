@@ -11,6 +11,9 @@
     "require": {
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "ixudra/curl": "6.*"
+    },
     "autoload": {
         "psr-4": {
             "Hsky\\XinXi\\": "src/"
