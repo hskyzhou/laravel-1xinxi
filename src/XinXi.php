@@ -13,7 +13,7 @@
 		 * @date		2016-09-16 07:24:54
 		 * @return		
 		 */
-		public function sendNormalInfo($verify, $mobile, $sendTime = ''){
+		public function sendNormalInfo($verify, $mobile, $sendTime = '', $extno = ''){
 			$service = new CurlService();
 
 			/*数组则拼接*/
@@ -24,17 +24,15 @@
 			$params = [
 				'name' => config('xinxi.account'),     //必填参数。用户账号
 				'pwd' => config('xinxi.api_pwd'),     //必填参数。（web平台：基本资料中的接口密码）
-				'content' => '短信验证码为：'.$verify.'，请勿将验证码提供给他人。',   //必填参数。发送内容（1-500 个汉字）UTF-8编码
+				'content' => sprintf(config('xinxi.normal_template'), $verify),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
 				'mobile' => $mobile,   //必填参数。手机号码。多个以英文逗号隔开
 				'stime' => $sendTime,   //可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送
 				'sign' => config('xinxi.sign'),    //必填参数。用户签名。
 				'type'=>'pt',  //必填参数。固定值 pt
-				'extno'=>''    //可选参数，扩展码，用户定义扩展码，只能为数字
+				'extno' => $extno    //可选参数，扩展码，用户定义扩展码，只能为数字
 			];
 
-			$response =  $service->to('http://www.foo.com/bar')->withData($params)->post();
-
-			return $this->deal($response);
+			return $this->send($params);
 		}
 
 		/**
@@ -46,9 +44,8 @@
 		 * @date		2016-09-16 07:24:54
 		 * @return		
 		 */
-		public function sendCustomInfo($content, $mobile, $sendTime = ''){
-			$service = new CurlService();
-
+		public function sendCustomInfo($content, $mobile, $sendTime = '', $extno = ''){
+			
 			/*数组则拼接*/
 			if(is_array($mobile)){
 				$mobile = implode(',', $mobile);
@@ -62,11 +59,16 @@
 				'stime' => $sendTime,   //可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送
 				'sign' => config('xinxi.sign'),    //必填参数。用户签名。
 				'type'=>'gx',  //必填参数。固定值 pt
-				'extno'=>''    //可选参数，扩展码，用户定义扩展码，只能为数字
+				'extno' => $extno    //可选参数，扩展码，用户定义扩展码，只能为数字
 			];
 
-			$response =  $service->to('http://www.foo.com/bar')->withData($params)->post();
+			return $this->send($params);
+		}
 
+		/*发送请求*/
+		private function send($params){
+			$service = new CurlService();
+			$response =  $service->to(config('xinxi.api_url'))->withData($params)->post();
 			return $this->deal($response);
 		}
 

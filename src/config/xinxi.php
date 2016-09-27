@@ -21,7 +21,8 @@
 			'13' =>	'IP鉴权失败',
 			'14' =>	'格式错误',
 			'-1' =>	'系统异常',
-
 		],
+
+		'normal_template' => "短信验证码为：%s，请勿将验证码提供给他人。",  //普通短信模板
 		'api_url' => 'http://web.1xinxi.cn/asmx/smsservice.aspx',
 	];
