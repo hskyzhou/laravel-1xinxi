@@ -24,7 +24,7 @@
 			$params = [
 				'name' => config('xinxi.account'),     //必填参数。用户账号
 				'pwd' => config('xinxi.api_pwd'),     //必填参数。（web平台：基本资料中的接口密码）
-				'content' => sprintf(config('xinxi.normal_template'), $verify),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
+				'content' => urlencode(sprintf(config('xinxi.normal_template'), $verify)),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
 				'mobile' => $mobile,   //必填参数。手机号码。多个以英文逗号隔开
 				'stime' => $sendTime,   //可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送
 				'sign' => config('xinxi.sign'),    //必填参数。用户签名。
@@ -54,7 +54,7 @@
 			$params = [
 				'name' => config('xinxi.account'),     //必填参数。用户账号
 				'pwd' => config('xinxi.api_pwd'),     //必填参数。（web平台：基本资料中的接口密码）
-				'content' => $content,   //必填参数。发送内容（1-500 个汉字）UTF-8编码
+				'content' => urlencode($content),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
 				'mobile' => $mobile,   //必填参数。手机号码。多个以英文逗号隔开
 				'stime' => $sendTime,   //可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送
 				'sign' => config('xinxi.sign'),    //必填参数。用户签名。
