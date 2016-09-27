@@ -4,7 +4,6 @@
 	use Ixudra\Curl\CurlService;
 
 	class XinXi{
-		
 		/**
 		 * 发送 普通短信
 		 * @param		string $verify  验证码
