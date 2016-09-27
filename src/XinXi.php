@@ -78,7 +78,7 @@
 
 			$returnData = [];
 
-			if($code == 0){
+			if($code == '0'){
 				list($code, $sendid, $invalidcount, $successcount, $blackcount, $msg) = explode(',', $response);
 				$returnData = [
 					'code' => $code,
