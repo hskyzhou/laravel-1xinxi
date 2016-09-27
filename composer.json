@@ -9,9 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
-    },
-    "require-dev": {
+        "php": ">=5.4.0",
         "ixudra/curl": "6.*"
     },
     "autoload": {
