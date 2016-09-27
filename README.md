@@ -11,7 +11,7 @@ laravel5.2 for 1xinxi(第翼信息)
 ```php
 	'providers' => [
 		...
-		Hsky/XinXi/XinXiServiceProvider::class
+		Hsky\XinXi\XinXiServiceProvider::class
 	]
 ```
 
@@ -19,7 +19,7 @@ laravel5.2 for 1xinxi(第翼信息)
 
 ```php
 	'aliases' => [
-		'Xinxi' => Hsky/XinXi/Facades/XinXiFacade::class,
+		'Xinxi' => Hsky\XinXi\Facades\XinXiFacade::class,
 	]
 ```
 
