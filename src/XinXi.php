@@ -24,7 +24,7 @@
 			$params = [
 				'name' => config('xinxi.account'),     //必填参数。用户账号
 				'pwd' => config('xinxi.api_pwd'),     //必填参数。（web平台：基本资料中的接口密码）
-				'content' => urlencode(sprintf(config('xinxi.normal_template'), $verify)),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
+				'content' => sprintf(config('xinxi.normal_template'), $verify),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
 				'mobile' => $mobile,   //必填参数。手机号码。多个以英文逗号隔开
 				'stime' => $sendTime,   //可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送
 				'sign' => config('xinxi.sign'),    //必填参数。用户签名。
@@ -32,7 +32,11 @@
 				'extno' => $extno    //可选参数，扩展码，用户定义扩展码，只能为数字
 			];
 
-			return $this->send($params);
+			$returnSendData = $this->send($params);
+			return array_merge($returnData, $returnSendData, [
+				'result' => true,
+				'message' => '发送成功'
+			]);
 		}
 
 		/**
@@ -44,25 +48,39 @@
 		 * @date		2016-09-16 07:24:54
 		 * @return		
 		 */
-		public function sendCustomInfo($content, $mobile, $sendTime = '', $extno = ''){
-			
-			/*数组则拼接*/
-			if(is_array($mobile)){
-				$mobile = implode(',', $mobile);
+		public function sendCustomInfo($content, $mobiles, $sendTime = '', $extno = ''){
+			$returnData = [
+				'result' => false,
+				'message' => '数据错误'
+			];
+
+			if(empty($mobiles)){
+				return $returnData;
 			}
+
+			/*短信发送内容拼接*/
+			$sendContent = '';
+			foreach($mobiles as $mobile){
+				// 内容#@#号码#@@#内容#@#号码
+				$sendContent .= $content . '#@#' . $mobile . '#@@#';
+			}
+			$sendContent = rtrim($sendContent, '#@@#');
 
 			$params = [
 				'name' => config('xinxi.account'),     //必填参数。用户账号
 				'pwd' => config('xinxi.api_pwd'),     //必填参数。（web平台：基本资料中的接口密码）
-				'content' => urlencode($content),   //必填参数。发送内容（1-500 个汉字）UTF-8编码
-				'mobile' => $mobile,   //必填参数。手机号码。多个以英文逗号隔开
+				'content' => $sendContent,   //必填参数。发送内容（1-500 个汉字）UTF-8编码
 				'stime' => $sendTime,   //可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送
 				'sign' => config('xinxi.sign'),    //必填参数。用户签名。
 				'type'=>'gx',  //必填参数。固定值 pt
 				'extno' => $extno    //可选参数，扩展码，用户定义扩展码，只能为数字
 			];
 
-			return $this->send($params);
+			$returnSendData = $this->send($params);
+			return array_merge($returnData, $returnSendData, [
+				'result' => true,
+				'message' => '发送成功'
+			]);
 		}
 
 		/*发送请求*/
