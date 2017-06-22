@@ -14,6 +14,11 @@
 		 * @return		
 		 */
 		public function sendNormalInfo($verify, $mobile, $sendTime = '', $extno = ''){
+			$returnData = [
+				'result' => false,
+				'message' => '数据错误'
+			];
+			
 			$service = new CurlService();
 
 			/*数组则拼接*/
